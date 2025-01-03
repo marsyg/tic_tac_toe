@@ -1,63 +1,40 @@
-import Arena from "./components/arena"
-export default function App() {
-  const check2 = (array,num,diff1,diff2) => {
-    const value = num
 
-    const checkSubsequence = (startIndex, target1, target2) => {
-        let found1 = false, found2 = false;
-        for (let j = startIndex; j < array.length; j++) {
-            if (array[j] === target1) {
-                found1 = true;
-            }
-            if (array[j] === target2) {
-                found2 = true;
-            }
-        }
-        return found1 && found2;
-    };
-
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] === value && checkSubsequence(i + 1, value + 2*diff1, value + 2 *2* diff1)) {
-            return true;
-        } else if (array[i] === value + diff2 && checkSubsequence(i + 1, value + diff2 + diff1 , value + diff2 + 2 * diff1)) {
-            return true;
-        }
-    }
-
-    return false;
-};
-  const check1 = (array,num,diff1,diff2) => {
-    const value = num
-
-    const checkSubsequence = (startIndex, target1, target2) => {
-        let found1 = false, found2 = false;
-        for (let j = startIndex; j < array.length; j++) {
-            if (array[j] === target1) {
-                found1 = true;
-            }
-            if (array[j] === target2) {
-                found2 = true;
-            }
-        }
-        return found1 && found2;
-    };
-
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] === value && checkSubsequence(i + 1, value + diff1, value + 2 * diff1)) {
-            return true;
-        } else if (array[i] === value + diff2 && checkSubsequence(i + 1, value + diff2 + diff1 , value + diff2 + 2 * diff1)) {
-            return true;
-        } else if (array[i] === value + 2*diff2 && checkSubsequence(i + 1, value + 2*diff2 + diff1, value + 2*diff2 + 2 * diff1)) {
-            return true;
-        }
-    }
-
-    return false;
-};
-
+import React from 'react'
+import  { useState, useCallback, useEffect } from "react";
+import Arena from './components/arena';
+function App() {
+  const [count, setCount] = useState(0)
+  const [player1, setPlayer1] = useState([]);
+  const [player2, setPlayer2] = useState([]);
+  useEffect(() => {
+  console.log("player1 changes", player1);
+    return () => console.log("🗑️ App component cleanup");
+  },[player1]);
+  useEffect(() => {
+    console.log("player2 changes", player2);
+      return () => console.log("🗑️ App component cleanup");
+    },[player2]);
+  const handleClick = ()=> {
+    // console.log("🖱️ handleClick called, current count:", count);
+    setCount(prev => {
+      const newCount = prev + 1;
+      // console.log("⬆️ Updating count from", prev, "to", newCount);
+      return newCount;
+    });
+  };
   return (
-    <div className="flex items-center justify-center h-screen">
-      <Arena />
+    <>
+    <div className="h-screen w-full flex justify-center items-center">
+    <Arena 
+     onCellClick={handleClick}
+     setPlayer1={setPlayer1}
+     setPlayer2={setPlayer2}
+     count={count}
+      />
     </div>
+   
+    </>
   )
 }
+
+export default App
