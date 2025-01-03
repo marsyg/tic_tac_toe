@@ -22,7 +22,8 @@ const [cellIndex , setCellIndex] = useState(null)
         console.log("1️⃣ First click on cell:", index);
         newGrid[index] = {
           ...currentCell,
-          isClickedOnce: true
+          isClickedOnce: true,
+          emoji: count % 2 === 0 ? "😊" : "❌", // Assign emoji
         };
         
         
@@ -77,20 +78,22 @@ const [cellIndex , setCellIndex] = useState(null)
           cell={cell}
          onclick={() => handleOnClick(index,count)}
           index={index}
+          count={count}
         />
       ))}
     </div>
   )
 }
 
-const GridCell = ({  index,onclick }) => {
+const GridCell = ({   cell, count,index,onclick }) => {
   
     return (
       <div
        onClick={onclick}
         className="h-12 w-12 flex items-center justify-center text-white bg-amber-900"
       >
-       {index}
+        {cell.emoji === "😊" && <SmileIcon />}
+        {cell.emoji === "❌" && <CrossIcon />}
       </div>
     );
   };
