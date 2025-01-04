@@ -2,7 +2,6 @@
 import React from 'react'
 import  { useState, useCallback, useEffect } from "react";
 import Arena from './components/arena';
-import { use } from 'react';
 function App() {
   const [count, setCount] = useState(0)
   const [player1, setPlayer1] = useState([]);
@@ -32,11 +31,8 @@ function App() {
     else if(check2(array,num ,2,2)){return true;}
     return false;
   }, []);
+
   const checkSubsequence = (array,startIndex, target1, target2) => {
-    console.log("🔄array",array);
-    console.log("🔄startIndex",startIndex);
-    console.log("🔄target1",target1)
-    console.log("🔄target2",target2);
     let found1 = false, found2 = false;
     for (let j = startIndex; j < array.length; j++) {
       if (array[j] === target1) found1 = true;
@@ -75,19 +71,20 @@ function App() {
     }
     return false;
   }, []);
+
   useEffect(() => {
   console.log("player1 changes", player1);
     return () => console.log("🗑️ App component cleanup");
   },[player1]);
+
   useEffect(() => {
     console.log("player2 changes", player2);
       return () => console.log("🗑️ App component cleanup");
     },[player2]);
+
   const handleClick = ()=> {
-    // console.log("🖱️ handleClick called, current count:", count);
     setCount(prev => {
       const newCount = prev + 1;
-      // console.log("⬆️ Updating count from", prev, "to", newCount);
       return newCount;
     });
   };
